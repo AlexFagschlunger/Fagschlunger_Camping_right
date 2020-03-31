@@ -178,11 +178,14 @@
     <Content Include="Views\Reservierung\Reservierung.cshtml" />
     <Content Include="Views\Reservierung\Anfrage.cshtml" />
     <Content Include="Views\Home\Impressum.cshtml" />
+    <Content Include="Views\CampingPlatz\Index.cshtml" />
+    <Content Include="Views\CampingPlatz\Info.cshtml" />
+    <Content Include="Views\CampingPlatz\Preis.cshtml" />
+    <Content Include="Views\CampingPlatz\Bilder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\CampingPlatz\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
