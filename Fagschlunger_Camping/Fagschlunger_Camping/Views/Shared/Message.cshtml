@@ -1,0 +1,29 @@
+﻿@model Fagschlunger_Camping.Models.Message
+
+@{
+    ViewBag.Title = "Message";
+}
+
+@if (Model != null)
+{
+    if (!string.IsNullOrEmpty(Model.Header.Trim()))
+    {
+        <h2>@Model.Header</h2>
+    }
+    if (!string.IsNullOrEmpty(Model.AdditionalHeader.Trim()))
+    {
+        <h3>@Model.AdditionalHeader</h3>
+    }
+    if (!string.IsNullOrEmpty(Model.MessageText.Trim()))
+    {
+        <p>@Model.MessageText</p>
+    }
+    if (!string.IsNullOrEmpty(Model.Solution.Trim()))
+    {
+        <p>@Model.Solution</p>
+    }
+}
+else
+{
+    <p>keine Meldung vorhanden</p>
+}

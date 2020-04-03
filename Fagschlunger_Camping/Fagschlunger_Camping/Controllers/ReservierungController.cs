@@ -22,7 +22,7 @@ namespace Fagschlunger_Camping.Controllers
             return View(new Reservierung());
         }
         [HttpPost]
-        public ActionResult Registration(Reservierung user)
+        public ActionResult Anfrage(Reservierung user)
         {
             // Parameter user:hier sind die eingegebenen Daten des Formulars enthalten
 
@@ -56,17 +56,16 @@ namespace Fagschlunger_Camping.Controllers
                     // Verbindung schließen
                     rep.Close();
                     // Erfolgsmeldung ausgeben
-                    return View("Message", new Message("Registrierung", "Ihre Daten wurde erfolgreich abgespeichert"));
+                    return View("Message", new Message("Reservierung", "Ihre Daten wurde erfolgreich abgespeichert"));
                 }
                 else
                 {
                     rep.Close();
                     // Fehlermeldung ausgeben
-                    return View("Message", new Message("Registrierung", "Ihre Daten konnten nicht abgespeichert werden"));
+                    return View("Message", new Message("Reservierung", "Ihre Daten konnten nicht abgespeichert werden"));
                 }
             }
         }
-
 
         [HttpPost]
         private void CheckUserData(Reservierung user)
@@ -85,77 +84,6 @@ namespace Fagschlunger_Camping.Controllers
             {
                 ModelState.AddModelError("Lastname", "Benutzername ist ein Pflichtfeld.");
             }
-        }
-        private bool CheckPassword(string password)
-        {
-            string pwd = password.Trim();
-            if (password.Trim().Length < 8)
-            {
-                return false;
-            }
-
-            if (!PasswordContainsCountLowercaseCharacters(pwd, 1))
-            {
-                return false;
-            }
-            if (!PasswordContainsCountUppercaseCharacters(pwd, 1))
-            {
-                return false;
-            }
-            if (!PasswordContainsCountSpecialCharacters(pwd, 1))
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool PasswordContainsCountLowercaseCharacters(string text, int minCount)
-        {
-            int count = 0;
-            foreach (char c in text)
-            {
-                //falls das aktuelle Zeichen ein Kleinuchstabe ist
-                if (char.IsLower(c))
-                {
-                    //Anzahl erhöhen
-                    count++;
-                }
-
-            }
-            return count >= minCount;
-        }
-
-        private bool PasswordContainsCountUppercaseCharacters(string text, int minCount)
-        {
-            int count = 0;
-            foreach (char c in text)
-            {
-                //falls das aktuelle Zeichen ein Kleinuchstabe ist
-                if (char.IsUpper(c))
-                {
-                    //Anzahl erhöhen
-                    count++;
-                }
-
-            }
-            return count >= minCount;
-        }
-
-        private bool PasswordContainsCountSpecialCharacters(string text, int minCount)
-        {
-            string allowedChars = "!§$%&/()[]{}=?'*+#€^°;:,.-_\"'\\";
-            int count = 0;
-            foreach (char c in text)
-            {
-                //falls das aktuelle Zeichen ein Kleinuchstabe ist
-                if (allowedChars.Contains(c))
-                {
-                    //Anzahl erhöhen
-                    count++;
-                }
-
-            }
-            return count >= minCount;
         }
     }
 }

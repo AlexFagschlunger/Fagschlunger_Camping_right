@@ -36,7 +36,7 @@
 
             <tr>
                 <td>@Html.LabelFor(u => u.Abreisedatum, "Abreisedatum: ")</td>
-                <td>@Html.TextBoxFor(u => u.Abreisedatum, new { type = "date"})</td>
+                <td>@Html.TextBoxFor(u => u.Abreisedatum, new { type = "date" })</td>
             </tr>
 
             <tr>
@@ -49,7 +49,12 @@
                     <input type="submit" value="absenden" id="btnSubmit" />
                     <input type="reset" value="abbrechen" id="btnReset" />
                 </td>
-            </tr>
+                    <td>
+                        <form method="post" action="~/reservierung/delete">
+                            <input type="submit" value="löschen" />
+                        </form>
+                    </td>
+                </tr>
         </tbody>
         <tfoot>
             <tr>

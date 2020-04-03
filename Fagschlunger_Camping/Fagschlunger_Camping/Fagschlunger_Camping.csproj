@@ -211,6 +211,7 @@
     <Content Include="Views\CampingPlatz\Info.cshtml" />
     <Content Include="Views\CampingPlatz\Preis.cshtml" />
     <Content Include="Views\CampingPlatz\Bilder.cshtml" />
+    <Content Include="Views\Shared\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

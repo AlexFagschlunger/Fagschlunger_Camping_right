@@ -39,7 +39,7 @@ namespace Fagschlunger_Camping.Models.db
         {
             // Command erzeugen - mit Parameter (SQL-Injections verhindern)
             DbCommand cmdDel = this._connection.CreateCommand();
-            cmdDel.CommandText = "DELETE FROM users WHERE id=@userId";
+            cmdDel.CommandText = "DELETE FROM users WHERE id=@firstname";
 
             //Parameter belegen
             DbParameter paramId = cmdDel.CreateParameter();
@@ -52,77 +52,6 @@ namespace Fagschlunger_Camping.Models.db
 
             // Command ausführen
             return cmdDel.ExecuteNonQuery() == 1; // gibt true zurück, falls genau ein User gelöscht wurde ansonsten false
-        }
-
-        public List<Reservierung> GetAllUser()
-        {
-            List<Reservierung> users = new List<Reservierung>();
-
-
-            DbCommand cmdSelect = this._connection.CreateCommand();
-            cmdSelect.CommandText = "SELECT * FROM users";
-
-            // ExecuteReader() wird immer bei SELECT- Abfragen benötigt mit ihm kann man sich zeileinweise durch das erhaltene Ergebnis bewegen
-            using (DbDataReader reader = cmdSelect.ExecuteReader())
-            {
-                // mit Read() wird der nächste Datensatz (User) gelesen
-                while (reader.Read())
-                {
-                    users.Add(new Reservierung
-                    {
-                        // Id ... so lautet das feld in der Klasse User
-                        // "id" ... so lautet der Spaltenname in der Datenbanktabelle users
-
-                        ID = Convert.ToInt32(reader["id"]),
-                        Firstname = Convert.ToString(reader["firstname"]),
-                        Lastname = Convert.ToString(reader["lastname"]),
-                        Ankunftsdatum = Convert.ToDateTime(reader["ankunftsdatum"]),
-                        Abreisedatum = Convert.ToDateTime(reader["abreisedatum"]),
-                        Personen = Convert.ToInt32(reader["personen"]),
-                    });
-                }
-            }
-            return users;
-        }
-
-        public Reservierung GetUser(int id)
-        {
-            DbCommand cmdGetUser = this._connection.CreateCommand();
-            cmdGetUser.CommandText = "SELECT * FROM users WHERE id=@uid";
-
-            DbParameter paramId = cmdGetUser.CreateParameter();
-            paramId.ParameterName = "uid";
-            paramId.Value = id;
-            paramId.DbType = DbType.Int32;
-
-            cmdGetUser.Parameters.Add(paramId);
-
-            // bei SELECT-Abfragen müssen wir immer ExecuteReader() aufrufen
-            using (DbDataReader reader = cmdGetUser.ExecuteReader())
-            {
-                // keine Zeile (Datensatz) vorhanden
-                if (!reader.HasRows)
-                {
-                    // null wird zurückgeliefert
-                    return null;
-                }
-
-                // dieser Aufruf ist notwendig, da damit der erste DAtensatz gelesen wird
-                // Cursor zeigt zu Beginn "vor" alle Datensätze
-                reader.Read();
-                return new Reservierung
-                {
-                    // ID ... so lautet das feld in der Klasse User
-                    // "id" ... so lautet der Spaltenname in der Datenbanktabelle users
-
-                    ID = Convert.ToInt32(reader["id"]),
-                    Firstname = Convert.ToString(reader["firstname"]),
-                    Lastname = Convert.ToString(reader["lastname"]),
-                    Ankunftsdatum = Convert.ToDateTime(reader["ankunftsdatum"]),
-                    Abreisedatum = Convert.ToDateTime(reader["abreisedatum"]),
-                    Personen = Convert.ToInt32(reader["personen"]),
-                };
-            }
         }
 
         public bool Insert(Reservierung user)
@@ -138,7 +67,7 @@ namespace Fagschlunger_Camping.Models.db
             // @firstname, @lastname, ... Paramter => verhindern SQL-Injections
             // müssen immer verwendet werden wenn es sich um Daten des Benutzers handelt
             // @ firstname ... firstname kann beliebig benannt werden
-            cmdInsert.CommandText = "Insert Into users Values(null, @firstname, @lastname, @ankunftsdatum, @abreisedatum, @personen)";
+            cmdInsert.CommandText = "Insert Into reservierung Values(null, @firstname, @lastname, @ankunftsdatum, @abreisedatum, @personen)";
 
             // Parameter erzeugt
             DbParameter paramFN = cmdInsert.CreateParameter();
@@ -176,17 +105,13 @@ namespace Fagschlunger_Camping.Models.db
 
             // ExecuteNonQuery() ... wird bein INSERT, UPDATE, und DELETE verwendet diese Methode liefert die ANzahl der betroffenen Datensätze zurück
             return cmdInsert.ExecuteNonQuery() == 1;
-
-
-
-
         }
 
         public bool UpdateUserData(int id, Reservierung newUserData)
         {
             DbCommand cmdUpdate = this._connection.CreateCommand();
             cmdUpdate.CommandText = "UPDATE users SET firstname=@firstname, lastname =@lastname, + " +
-                "gender=@gender, birthdate=@birthdate, username=@username, password=sha2(@password, 512)" +
+                "ankunftsdatum=@ankunftsdatum, abreisedatum=@abreisedatum, personen=@personen" +
                 "WHERE id=@uId";
 
             DbParameter paramFirstname = cmdUpdate.CreateParameter();
