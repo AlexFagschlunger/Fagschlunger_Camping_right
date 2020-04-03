@@ -126,6 +126,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\db\RepositoryReservierungDB.cs" />
+    <Compile Include="Models\IRepositoryReservierung.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Reservierung.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +146,7 @@
     <Content Include="Content\Images\foto4.jpeg" />
     <Content Include="Content\Images\foto5.jpeg" />
     <Content Include="Content\Images\foto6.jpeg" />
+    <Content Include="Content\Images\info.png" />
     <Content Include="Content\Images\Zwischen.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -185,7 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Models\db\db_script\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
