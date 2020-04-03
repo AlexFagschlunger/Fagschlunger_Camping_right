@@ -33,7 +33,7 @@ namespace Fagschlunger_Camping.Controllers
             //2. Formulardaten überprüfen - muss immer gemacht werden
             //      auch wenn z.b das Formular mit HIlfe von JavaScript
             //      überprüft wurde
-            CheckUserData(user);
+            CheckReservierungData(user);
 
             //falls Fehler vorhanden sind
             if (!ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace Fagschlunger_Camping.Controllers
         }
 
         [HttpPost]
-        private void CheckUserData(Reservierung user)
+        private void CheckReservierungData(Reservierung user)
         {
             if (user == null)
             {
