@@ -19,7 +19,7 @@ namespace Fagschlunger_Camping.Controllers
         [HttpGet]
         public ActionResult Anfrage()
         {
-            return View(new Reservierung);
+            return View(new Reservierung());
         }
         [HttpPost]
         public ActionResult Registration(Reservierung user)
@@ -76,30 +76,14 @@ namespace Fagschlunger_Camping.Controllers
                 return;
             }
 
+            if (string.IsNullOrEmpty(user.Firstname.Trim()))
+            {
+                ModelState.AddModelError("Firstname", "Nachname ist ein Pflichtfeld.");
+            }
+
             if (string.IsNullOrEmpty(user.Lastname.Trim()))
             {
-                ModelState.AddModelError("Lastname", "Nachname ist ein Pflichtfeld.");
-            }
-
-            if (user.Gender == Gender.notspecified)
-            {
-                ModelState.AddModelError("Gender", "Bitte wählen Sie das Geschlecht aus.");
-            }
-
-            if (string.IsNullOrEmpty(user.Username.Trim()))
-            {
-                ModelState.AddModelError("Username", "Benutzername ist ein Pflichtfeld.");
-            }
-
-            //Passwortfeld
-            //Richtlinien: mind. 8 Zeichen lang, mind. 1 Kleinbuchstabe, mind. 1 Großbuchstabe, mind. 1  SOnderzeichen
-            if (!CheckPassword(user.Password))
-            {
-                ModelState.AddModelError("Passwort", "Passwort muss mind. 8 Zeichen lang sein und mind. 1 Kleinbuchstabe, mind. 1 Großbuchstabe, mind. 1  SOnderzeichen enthalten");
-            }
-            if (user.Password != user.Password2)
-            {
-                ModelState.AddModelError("Password2", "Passwort2 muss mit Passwort1 übereinstimmen");
+                ModelState.AddModelError("Lastname", "Benutzername ist ein Pflichtfeld.");
             }
         }
         private bool CheckPassword(string password)

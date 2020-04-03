@@ -1,7 +1,63 @@
-﻿
+﻿@model Fagschlunger_Camping.Models.Reservierung
+
 @{
     ViewBag.Title = "Anfrage";
 }
 
 <h2>Anfrage</h2>
 
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.ValidationSummary()
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <td colspan="2">Reservierungsdaten</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(u => u.Firstname, "Vorname:* ")</td>
+                <td>@Html.TextBoxFor(u => u.Firstname, new { required = "required" })</td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(u => u.Lastname, "Nachname:* ")</td>
+                <td>
+                    @Html.TextBoxFor(u => u.Lastname, new { required = "required" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(u => u.Ankunftsdatum, "Ankunftsdatum: ")</td>
+                <td>@Html.TextBoxFor(u => u.Ankunftsdatum, new { type = "date" })</td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(u => u.Abreisedatum, "Abreisedatum: ")</td>
+                <td>@Html.TextBoxFor(u => u.Abreisedatum, new { type = "date"})</td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(u => u.Personen, "Anzahl von Personen:* ")</td>
+                <td>@Html.TextBoxFor(u => u.Personen, new { required = "required" })</td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align:center">
+                    <input type="submit" value="absenden" id="btnSubmit" />
+                    <input type="reset" value="abbrechen" id="btnReset" />
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">* sind Pflichtfelder</td>
+            </tr>
+        </tfoot>
+
+
+    </table>
+
+}

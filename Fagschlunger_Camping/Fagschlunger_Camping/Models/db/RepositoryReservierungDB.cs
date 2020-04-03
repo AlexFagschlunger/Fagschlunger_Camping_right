@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 using System.Data;
-using MySql;
+using MySql.Data.MySqlClient;
 using System.Data.Common;
 
 namespace Fagschlunger_Camping.Models.db
@@ -76,10 +76,9 @@ namespace Fagschlunger_Camping.Models.db
                         ID = Convert.ToInt32(reader["id"]),
                         Firstname = Convert.ToString(reader["firstname"]),
                         Lastname = Convert.ToString(reader["lastname"]),
-                        Gender = (Gender)Convert.ToInt32(reader["gender"]),
-                        Birthdate = Convert.ToDateTime(reader["birthdate"]),
-                        Username = Convert.ToString(reader["username"]),
-                        Password = ""
+                        Ankunftsdatum = Convert.ToDateTime(reader["ankunftsdatum"]),
+                        Abreisedatum = Convert.ToDateTime(reader["abreisedatum"]),
+                        Personen = Convert.ToInt32(reader["personen"]),
                     });
                 }
             }
@@ -119,10 +118,9 @@ namespace Fagschlunger_Camping.Models.db
                     ID = Convert.ToInt32(reader["id"]),
                     Firstname = Convert.ToString(reader["firstname"]),
                     Lastname = Convert.ToString(reader["lastname"]),
-                    Gender = (Gender)Convert.ToInt32(reader["gender"]),
-                    Birthdate = Convert.ToDateTime(reader["birthdate"]),
-                    Username = Convert.ToString(reader["username"]),
-                    Password = ""
+                    Ankunftsdatum = Convert.ToDateTime(reader["ankunftsdatum"]),
+                    Abreisedatum = Convert.ToDateTime(reader["abreisedatum"]),
+                    Personen = Convert.ToInt32(reader["personen"]),
                 };
             }
         }
@@ -140,7 +138,7 @@ namespace Fagschlunger_Camping.Models.db
             // @firstname, @lastname, ... Paramter => verhindern SQL-Injections
             // müssen immer verwendet werden wenn es sich um Daten des Benutzers handelt
             // @ firstname ... firstname kann beliebig benannt werden
-            cmdInsert.CommandText = "Insert Into users Values(null, @firstname, @lastname, @gender, @birthdate, @username, sha2(@password, 512))";
+            cmdInsert.CommandText = "Insert Into users Values(null, @firstname, @lastname, @ankunftsdatum, @abreisedatum, @personen)";
 
             // Parameter erzeugt
             DbParameter paramFN = cmdInsert.CreateParameter();
@@ -153,33 +151,28 @@ namespace Fagschlunger_Camping.Models.db
             paramLN.Value = user.Lastname;
             paramLN.DbType = DbType.String;
 
-            DbParameter paramGender = cmdInsert.CreateParameter();
-            paramGender.ParameterName = "gender";
-            paramGender.Value = user.Gender;
-            paramGender.DbType = DbType.Int32;
+            DbParameter paramAnkunft = cmdInsert.CreateParameter();
+            paramAnkunft.ParameterName = "ankunftsdatum";
+            paramAnkunft.Value = user.Ankunftsdatum;
+            paramAnkunft.DbType = DbType.Date;
 
-            DbParameter paramBDate = cmdInsert.CreateParameter();
-            paramBDate.ParameterName = "birthdate";
-            paramBDate.Value = user.Birthdate;
-            paramBDate.DbType = DbType.Date;
+            DbParameter paramAbreise = cmdInsert.CreateParameter();
+            paramAbreise.ParameterName = "abreisedatum";
+            paramAbreise.Value = user.Abreisedatum;
+            paramAbreise.DbType = DbType.Date;
 
-            DbParameter paramUsername = cmdInsert.CreateParameter();
-            paramUsername.ParameterName = "username";
-            paramUsername.Value = user.Username;
-            paramUsername.DbType = DbType.String;
-
-            DbParameter paramPwd = cmdInsert.CreateParameter();
-            paramPwd.ParameterName = "password";
-            paramPwd.Value = user.Password;
-            paramPwd.DbType = DbType.String;
+            DbParameter paramPerson = cmdInsert.CreateParameter();
+            paramPerson.ParameterName = "personen";
+            paramPerson.Value = user.Personen;
+            paramPerson.DbType = DbType.Int32;
 
             // Parameteer mit dem Comamnd verbinden
             cmdInsert.Parameters.Add(paramFN);
             cmdInsert.Parameters.Add(paramLN);
-            cmdInsert.Parameters.Add(paramGender);
-            cmdInsert.Parameters.Add(paramBDate);
-            cmdInsert.Parameters.Add(paramUsername);
-            cmdInsert.Parameters.Add(paramPwd);
+            cmdInsert.Parameters.Add(paramAnkunft);
+            cmdInsert.Parameters.Add(paramAbreise);
+            cmdInsert.Parameters.Add(paramPerson);
+
 
             // ExecuteNonQuery() ... wird bein INSERT, UPDATE, und DELETE verwendet diese Methode liefert die ANzahl der betroffenen Datensätze zurück
             return cmdInsert.ExecuteNonQuery() == 1;
@@ -207,39 +200,27 @@ namespace Fagschlunger_Camping.Models.db
             paramLastname.DbType = DbType.String;
 
 
-            DbParameter paramGender = cmdUpdate.CreateParameter();
-            paramGender.ParameterName = "gender";
-            paramGender.Value = newUserData.Gender;
-            paramGender.DbType = DbType.Int32;
+            DbParameter paramAnkunft = cmdUpdate.CreateParameter();
+            paramAnkunft.ParameterName = "ankunftsdatum";
+            paramAnkunft.Value = newUserData.Ankunftsdatum;
+            paramAnkunft.DbType = DbType.Date;
 
-            DbParameter paramBDate = cmdUpdate.CreateParameter();
-            paramBDate.ParameterName = "birthdate";
-            paramBDate.Value = newUserData.Birthdate;
-            paramBDate.DbType = DbType.Date;
+            DbParameter paramAbreise = cmdUpdate.CreateParameter();
+            paramAbreise.ParameterName = "abreisedatum";
+            paramAbreise.Value = newUserData.Abreisedatum;
+            paramAbreise.DbType = DbType.Date;
 
-            DbParameter paramUsername = cmdUpdate.CreateParameter();
-            paramUsername.ParameterName = "username";
-            paramUsername.Value = newUserData.Username;
-            paramUsername.DbType = DbType.String;
-
-            DbParameter paramPwd = cmdUpdate.CreateParameter();
-            paramPwd.ParameterName = "password";
-            paramPwd.Value = newUserData.Password;
-            paramPwd.DbType = DbType.String;
-
-            DbParameter paramID = cmdUpdate.CreateParameter();
-            paramID.ParameterName = "id";
-            paramID.Value = newUserData.ID;
-            paramID.DbType = DbType.String;
+            DbParameter paramPerson = cmdUpdate.CreateParameter();
+            paramPerson.ParameterName = "personen";
+            paramPerson.Value = newUserData.Personen;
+            paramPerson.DbType = DbType.Int32;
 
 
             cmdUpdate.Parameters.Add(paramFirstname);
             cmdUpdate.Parameters.Add(paramLastname);
-            cmdUpdate.Parameters.Add(paramGender);
-            cmdUpdate.Parameters.Add(paramBDate);
-            cmdUpdate.Parameters.Add(paramUsername);
-            cmdUpdate.Parameters.Add(paramPwd);
-            cmdUpdate.Parameters.Add(paramID);
+            cmdUpdate.Parameters.Add(paramAnkunft);
+            cmdUpdate.Parameters.Add(paramAbreise);
+            cmdUpdate.Parameters.Add(paramPerson);
 
 
             return cmdUpdate.ExecuteNonQuery() == 1;
