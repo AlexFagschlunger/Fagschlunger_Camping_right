@@ -143,6 +143,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BenutzerverwaltungController.cs" />
     <Compile Include="Controllers\CampingPlatzController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReservierungController.cs" />
@@ -150,9 +152,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\db\RepositoryReservierungDB.cs" />
+    <Compile Include="Models\db\RepositoryUserDB.cs" />
     <Compile Include="Models\IRepositoryReservierung.cs" />
+    <Compile Include="Models\IRepositoryUser.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Reservierung.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +181,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\db\db_script\camping.sql" />
     <Content Include="Models\db\db_script\einfuehrung.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -212,6 +219,12 @@
     <Content Include="Views\CampingPlatz\Preis.cshtml" />
     <Content Include="Views\CampingPlatz\Bilder.cshtml" />
     <Content Include="Views\Shared\Message.cshtml" />
+    <Content Include="Views\Benutzerverwaltung\Index.cshtml" />
+    <Content Include="Views\Benutzerverwaltung\Registration.cshtml" />
+    <Content Include="Views\Benutzerverwaltung\Login.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Reservierungsanfrage.cshtml" />
+    <Content Include="Views\Admin\RegistrieteBenutzer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
