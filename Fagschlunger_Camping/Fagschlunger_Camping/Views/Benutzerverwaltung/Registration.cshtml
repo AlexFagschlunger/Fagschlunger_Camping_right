@@ -18,6 +18,10 @@
         </thead>
         <tbody>
             <tr>
+                <td>@Html.LabelFor(u => u.Rolle, "Rolle:* ")</td>
+                <td>@Html.EnumDropDownListFor(u => u.Rolle, new { required = "required" })</td>
+            </tr>
+            <tr>
                 <td>@Html.LabelFor(u => u.Firstname, "Vorname: ")</td>
                 <td>@Html.TextBoxFor(u => u.Firstname)</td>
             </tr>

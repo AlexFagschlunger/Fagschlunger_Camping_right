@@ -140,9 +140,14 @@ namespace Fagschlunger_Camping.Models.db
             // @firstname, @lastname, ... Paramter => verhindern SQL-Injections
             // müssen immer verwendet werden wenn es sich um Daten des Benutzers handelt
             // @ firstname ... firstname kann beliebig benannt werden
-            cmdInsert.CommandText = "Insert Into users Values(null, @firstname, @lastname, @gender, @birthdate, @username, sha2(@password, 512))";
+            cmdInsert.CommandText = "Insert Into users Values(null, @rolle, @firstname, @lastname, @gender, @birthdate, @username, sha2(@password, 512))";
 
             // Parameter erzeugt
+            DbParameter paramRolle = cmdInsert.CreateParameter();
+            paramRolle.ParameterName = "rolle";
+            paramRolle.Value = user.Rolle;
+            paramRolle.DbType = DbType.Int32;
+
             DbParameter paramFN = cmdInsert.CreateParameter();
             paramFN.ParameterName = "firstname";
             paramFN.Value = user.Firstname;
@@ -174,6 +179,7 @@ namespace Fagschlunger_Camping.Models.db
             paramPwd.DbType = DbType.String;
 
             // Parameteer mit dem Comamnd verbinden
+            cmdInsert.Parameters.Add(paramRolle);
             cmdInsert.Parameters.Add(paramFN);
             cmdInsert.Parameters.Add(paramLN);
             cmdInsert.Parameters.Add(paramGender);
@@ -192,9 +198,14 @@ namespace Fagschlunger_Camping.Models.db
         public bool UpdateUserData(int id, User newUserData)
         {
             DbCommand cmdUpdate = this._connection.CreateCommand();
-            cmdUpdate.CommandText = "UPDATE users SET firstname=@firstname, lastname =@lastname, + " +
+            cmdUpdate.CommandText = "UPDATE users SET rolle=@rolle, firstname=@firstname, lastname =@lastname, + " +
                 "gender=@gender, birthdate=@birthdate, username=@username, password=sha2(@password, 512)" +
                 "WHERE id=@uId";
+
+            DbParameter paramRolle = cmdUpdate.CreateParameter();
+            paramRolle.ParameterName = "rolle";
+            paramRolle.Value = newUserData.Rolle;
+            paramRolle.DbType = DbType.Int32;
 
             DbParameter paramFirstname = cmdUpdate.CreateParameter();
             paramFirstname.ParameterName = "firstname";
@@ -233,6 +244,7 @@ namespace Fagschlunger_Camping.Models.db
             paramID.DbType = DbType.String;
 
 
+            cmdUpdate.Parameters.Add(paramRolle);
             cmdUpdate.Parameters.Add(paramFirstname);
             cmdUpdate.Parameters.Add(paramLastname);
             cmdUpdate.Parameters.Add(paramGender);
@@ -248,7 +260,12 @@ namespace Fagschlunger_Camping.Models.db
         public User Login(UserLogin user)
         {
             DbCommand cmdLogin = this._connection.CreateCommand();
-            cmdLogin.CommandText = "SELECT * FROM users WHERE username=@username AND password=sha2(@password, 512)";
+            cmdLogin.CommandText = "SELECT * FROM users WHERE rolle=@rolle AND username=@username AND password=sha2(@password, 512)";
+
+            DbParameter paramRolle = cmdLogin.CreateParameter();
+            paramRolle.ParameterName = "rolle";
+            paramRolle.Value = user.Rolle;
+            paramRolle.DbType = DbType.Int32;
 
             DbParameter paramUsername = cmdLogin.CreateParameter();
             paramUsername.ParameterName = "username";
@@ -260,6 +277,7 @@ namespace Fagschlunger_Camping.Models.db
             paramPwd.Value = user.Password;
             paramPwd.DbType = DbType.String;
 
+            cmdLogin.Parameters.Add(paramRolle);
             cmdLogin.Parameters.Add(paramUsername);
             cmdLogin.Parameters.Add(paramPwd);
 
