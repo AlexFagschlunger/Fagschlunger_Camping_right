@@ -88,7 +88,7 @@ namespace Fagschlunger_Camping.Controllers
 
             if (userFromDB == null)
             {
-                ModelState.AddModelError("Username", "Benutzername oder Passwort stimmen nicht überein!");
+                ModelState.AddModelError("Username", "Benutzername, Passwort oder Rolle stimmen nicht überein!");
                 return View(user);
             }
 
@@ -136,6 +136,7 @@ namespace Fagschlunger_Camping.Controllers
             {
                 ModelState.AddModelError("Password2", "Passwort2 muss mit Passwort1 übereinstimmen");
             }
+            
         }
         private bool CheckPassword(string password)
         {
