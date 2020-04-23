@@ -51,6 +51,7 @@ namespace Fagschlunger_Camping.Controllers
                 rep = new RepositoryUserDB();
 
                 // Verbindung zum BD-Server herstellen
+                user.Rolle = Benutzer.registrierterBenutzer;
                 rep.Open();
 
                 // versuchen die Userdaten einzutragen

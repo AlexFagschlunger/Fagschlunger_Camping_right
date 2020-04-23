@@ -9,15 +9,13 @@ namespace Fagschlunger_Camping.Models
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public Benutzer Rolle { get; set; }
 
-        public UserLogin() : this("", "", Benutzer.Gast) { }
+        public UserLogin() : this("", "") { }
 
-        public UserLogin(string username, string password, Benutzer rolle)
+        public UserLogin(string username, string password)
         {
             this.Username = username;
             this.Password = password;
-            this.Rolle = rolle;
         }
     }
 }

@@ -151,8 +151,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\db\DBBase.cs" />
     <Compile Include="Models\db\RepositoryReservierungDB.cs" />
     <Compile Include="Models\db\RepositoryUserDB.cs" />
+    <Compile Include="Models\IDBBase.cs" />
     <Compile Include="Models\IRepositoryReservierung.cs" />
     <Compile Include="Models\IRepositoryUser.cs" />
     <Compile Include="Models\Message.cs" />

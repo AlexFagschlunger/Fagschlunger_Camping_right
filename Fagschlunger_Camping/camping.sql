@@ -14,7 +14,7 @@ create table users(
    constraint id_PK primary key(id)
 )engine=InnoDB;
 
-Insert Into users Values(null, 0, "Fabus", "Eggus", 0, "2002-01-25", "egutsch", sha2("fabian", 512));
+Insert Into users Values(null, 1, "Alex", "Fagschlunger", 0, "2001-12-01", "Lexxu", sha2("Alexx", 512));
 
 select * from users;
 

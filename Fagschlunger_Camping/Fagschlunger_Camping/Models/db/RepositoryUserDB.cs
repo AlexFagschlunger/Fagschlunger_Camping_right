@@ -9,32 +9,8 @@ using System.Data.Common;
 
 namespace Fagschlunger_Camping.Models.db
 {
-    public class RepositoryUserDB : IRepositoryUser
+    public class RepositoryUserDB : DBBase, IRepositoryUser
     {
-        private string _connectionString = "Server=localhost;Database=db_camping;Uid=root;Pwd=01122001SvO";
-        private MySqlConnection _connection;
-
-
-        public void Open()
-        {
-            if (this._connection == null)
-            {
-                this._connection = new MySqlConnection(this._connectionString);
-            }
-            if (this._connection.State != ConnectionState.Open)
-            {
-                this._connection.Open();
-            }
-        }
-
-        public void Close()
-        {
-            if ((this._connection != null) && (this._connection.State != ConnectionState.Closed))
-            {
-                this._connection.Close();
-            }
-        }
-
         public bool Delete(int id)
         {
             // Command erzeugen - mit Parameter (SQL-Injections verhindern)
@@ -74,6 +50,7 @@ namespace Fagschlunger_Camping.Models.db
                         // "id" ... so lautet der Spaltenname in der Datenbanktabelle users
 
                         ID = Convert.ToInt32(reader["id"]),
+                        Rolle = (Benutzer)Convert.ToInt32(reader["rolle"]),
                         Firstname = Convert.ToString(reader["firstname"]),
                         Lastname = Convert.ToString(reader["lastname"]),
                         Gender = (Gender)Convert.ToInt32(reader["gender"]),
@@ -117,6 +94,7 @@ namespace Fagschlunger_Camping.Models.db
                     // "id" ... so lautet der Spaltenname in der Datenbanktabelle users
 
                     ID = Convert.ToInt32(reader["id"]),
+                    Rolle = (Benutzer)Convert.ToInt32(reader["rolle"]),
                     Firstname = Convert.ToString(reader["firstname"]),
                     Lastname = Convert.ToString(reader["lastname"]),
                     Gender = (Gender)Convert.ToInt32(reader["gender"]),
@@ -260,12 +238,8 @@ namespace Fagschlunger_Camping.Models.db
         public User Login(UserLogin user)
         {
             DbCommand cmdLogin = this._connection.CreateCommand();
-            cmdLogin.CommandText = "SELECT * FROM users WHERE rolle=@rolle AND username=@username AND password=sha2(@password, 512)";
+            cmdLogin.CommandText = "SELECT * FROM users WHERE username=@username AND password=sha2(@password, 512)";
 
-            DbParameter paramRolle = cmdLogin.CreateParameter();
-            paramRolle.ParameterName = "rolle";
-            paramRolle.Value = user.Rolle;
-            paramRolle.DbType = DbType.Int32;
 
             DbParameter paramUsername = cmdLogin.CreateParameter();
             paramUsername.ParameterName = "username";
@@ -277,7 +251,6 @@ namespace Fagschlunger_Camping.Models.db
             paramPwd.Value = user.Password;
             paramPwd.DbType = DbType.String;
 
-            cmdLogin.Parameters.Add(paramRolle);
             cmdLogin.Parameters.Add(paramUsername);
             cmdLogin.Parameters.Add(paramPwd);
 
@@ -291,6 +264,7 @@ namespace Fagschlunger_Camping.Models.db
                 return new User
                 {
                     ID = Convert.ToInt32(reader["id"]),
+                    Rolle = (Benutzer)Convert.ToInt32(reader["rolle"]),
                     Firstname = Convert.ToString(reader["firstname"]),
                     Lastname = Convert.ToString(reader["lastname"]),
                     Gender = (Gender)Convert.ToInt32(reader["gender"]),

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Fagschlunger_Camping.Models.db
 {
-    interface IRepositoryReservierung
+    interface IRepositoryReservierung : IDBBase
     {
-        void Open();
-        void Close();
 
         bool Insert(Reservierung user);
         bool Delete(int id);

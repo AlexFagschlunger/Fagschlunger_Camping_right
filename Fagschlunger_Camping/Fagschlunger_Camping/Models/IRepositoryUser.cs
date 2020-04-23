@@ -5,10 +5,8 @@ using System.Web;
 
 namespace Fagschlunger_Camping.Models.db
 {
-    interface IRepositoryUser
+    interface IRepositoryUser : IDBBase
     {
-        void Open();
-        void Close();
 
         bool Insert(User user);
         bool Delete(int id);
