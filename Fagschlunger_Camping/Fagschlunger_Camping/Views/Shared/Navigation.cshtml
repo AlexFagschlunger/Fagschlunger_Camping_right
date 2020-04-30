@@ -11,7 +11,16 @@
     <li class="nav_level1">@Html.ActionLink("Benutzerverwaltung", "index", "benutzerverwaltung")</li>
     <li class="nav_level2">@Html.ActionLink("Registration", "registration", "benutzerverwaltung")</li>
     <li class="nav_level2">@Html.ActionLink("Login", "login", "benutzerverwaltung")</li>
-    <li class="nav_level1">@Html.ActionLink("Admin", "index", "admin")</li>
-    <li class="nav_level2">@Html.ActionLink("Reservierungs Anfrage", "reservierungsanfrage", "admin")</li>
-    <li class="nav_level2">@Html.ActionLink("Registrierte Benutzer", "registrietebenutzer", "admin")</li>
+    @if (Session["loggedinUser"] != null)
+    {
+        Fagschlunger_Camping.Models.User u = (Fagschlunger_Camping.Models.User)Session["loggedinUser"];
+        if (u.Rolle == Fagschlunger_Camping.Models.Benutzer.Admin)
+        {
+            <li class="nav_level1">@Html.ActionLink("Admin", "index", "admin")</li>
+            <li class="nav_level2">@Html.ActionLink("Reservierungs Anfrage", "reservierungsanfrage", "admin")</li>
+            <li class="nav_level2">@Html.ActionLink("Registrierte Benutzer", "registrietebenutzer", "admin")</li>
+        }
+    }
+
+
 </ul>

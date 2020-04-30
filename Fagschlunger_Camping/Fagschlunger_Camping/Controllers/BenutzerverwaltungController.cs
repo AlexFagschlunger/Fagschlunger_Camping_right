@@ -101,6 +101,7 @@ namespace Fagschlunger_Camping.Controllers
                 Session["loggedinUser"] = userFromDB;
                 return RedirectToAction("index", "home");
             }
+            
         }
 
 

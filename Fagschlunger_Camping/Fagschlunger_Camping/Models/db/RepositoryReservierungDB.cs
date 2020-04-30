@@ -11,7 +11,6 @@ namespace Fagschlunger_Camping.Models.db
 {
     public class RepositoryReservierungDB : DBBase, IRepositoryReservierung
     {
-
         public bool Delete(int id)
         {
             // Command erzeugen - mit Parameter (SQL-Injections verhindern)
