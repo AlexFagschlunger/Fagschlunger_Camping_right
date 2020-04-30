@@ -40,6 +40,7 @@ namespace Fagschlunger_Camping.Controllers
 
             if (rep.UpdateUserData(id, newUserData))
             {
+                rep.Delete(id);
                 rep.Close();
                 return View("Message", new Message("User löschen", "Benutzer wurde erfolgreich geupdatet!"));
             }

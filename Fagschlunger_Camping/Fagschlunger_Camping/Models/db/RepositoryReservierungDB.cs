@@ -102,19 +102,24 @@ namespace Fagschlunger_Camping.Models.db
                 // mit Read() wird der nächste Datensatz (User) gelesen
                 while (reader.Read())
                 {
+                    int id = Convert.ToInt32(reader["id"]);
+                    string firstname = Convert.ToString(reader["firstname"]);
+                    string lastname = Convert.ToString(reader["lastname"]);
+                    bool bearbeitet = Convert.ToBoolean(reader["bearbeitet"]);
+                    DateTime ankunftsdatum = Convert.ToDateTime(reader["ankunftsdatum"]);
+                    DateTime abreisedatu = Convert.ToDateTime(reader["abreisedatum"]);
+                    int personen = Convert.ToInt32(reader["personen"]);
                     reservierungs.Add(new Reservierung
                     {
-                        // Id ... so lautet das feld in der Klasse User
-                        // "id" ... so lautet der Spaltenname in der Datenbanktabelle users
-
-                        ID = Convert.ToInt32(reader["id"]),
-                        Firstname = Convert.ToString(reader["firstname"]),
-                        Lastname = Convert.ToString(reader["lastname"]),
-                        Bearbeitet = Convert.ToBoolean(reader["bearbeitet"]),
-                        Ankunftsdatum = Convert.ToDateTime(reader["ankunftsdatum"]),
-                        Abreisedatum = Convert.ToDateTime(reader["abreisedatum"]),
-                        Personen = Convert.ToInt32(reader["personen"]),
-                    });
+                        ID = id,
+                        Firstname = firstname, 
+                        Lastname = lastname,
+                        Bearbeitet = bearbeitet,
+                        Ankunftsdatum = ankunftsdatum,
+                        Abreisedatum = abreisedatum,
+                        Personen = personen
+                        
+                }) ;
                 }
             }
             return reservierungs;

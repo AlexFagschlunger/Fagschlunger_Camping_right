@@ -31,27 +31,52 @@
         <tbody>
             @foreach (Reservierung r in Model)
             {
-                <tr>
-                    <td>@r.ID</td>
-                    <td>@r.Firstname</td>
-                    <td>@r.Lastname</td>
-                    <td>@r.Ankunftsdatum</td>
-                    <td>@r.Abreisedatum</td>
-                    <td>@r.Personen</td>
-                    <td>
+            <tr>
+                <td>@r.ID</td>
+                <td>
+                    <form method="post" action="/admin/update/@r.ID">
+                        <input type="submit" value="Updaten" />
+                    </form>
+                </td>
+                <td>@r.Firstname</td>
+                <td>
+                    <form method="post" action="/admin/update/@r.ID">
+                        <input type="submit" value="Updaten" />
+                    </form>
+                </td>
+                <td>@r.Lastname</td>
+                <td>
+                    <form method="post" action="/admin/update/@r.ID">
+                        <input type="submit" value="Updaten" />
+                    </form>
+                </td>
+                <td>@r.Ankunftsdatum</td>
+                <td>
+                    <form method="post" action="/admin/update/@r.ID">
+                        <input type="submit" value="Updaten" />
+                    </form>
+                </td>
+                <td>@r.Abreisedatum</td>
+                <td>
+                    <form method="post" action="/admin/update/@r.ID">
+                        <input type="submit" value="Updaten" />
+                    </form>
+                </td>
+                <td>@r.Personen</td>
+                <td>
+                    <form method="post" action="/admin/update/@r.ID">
+                        <input type="submit" value="Updaten" />
+                    </form>
+                </td>
+                <td>
 
-                        @*Formular für den Löschen Button erzeugen*@
-                        @*method = post ... Formulardaten werden nicht in der Addressleiste übertragen
-                            action ... wohin soll das Formular gesendet werden (AdminController und dort an die delete-Methode)
-                            es wird ein Parameter mit dem Namen id übermittelt*@
+                    @*Formular für den Löschen Button erzeugen*@
+                    @*method = post ... Formulardaten werden nicht in der Addressleiste übertragen
+            action ... wohin soll das Formular gesendet werden (AdminController und dort an die delete-Methode)
+            es wird ein Parameter mit dem Namen id übermittelt*@
 
-                        <form method="post" action="/admin/update/@r.ID">
-                            <input type="submit" value="Updaten" />
-                        </form>
-
-                    </td>
-                    <td>update</td>
-                </tr>
+                </td>
+            </tr>
             }
         </tbody>
         <tfoot>
