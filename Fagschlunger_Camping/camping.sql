@@ -18,3 +18,19 @@ Insert Into users Values(null, 1, "Alex", "Fagschlunger", 0, "2001-12-01", "Lexx
 
 select * from users;
 
+
+create table reservierung(
+   id int not null auto_increment,
+   firstname varchar(100) not null,
+   lastname varchar(100) not null,
+   bearbeitet bool not null,
+   ankunftsdatum date not null,
+   abreisedatum date not null,
+   personen int not null,
+   
+   constraint id_PK primary key(id)
+)engine=InnoDB;
+
+Insert Into reservierung Values(null, "Fabus", "Eggus", false, "2020-04-08", "2021-01-25", "1");
+
+select * from reservierung;

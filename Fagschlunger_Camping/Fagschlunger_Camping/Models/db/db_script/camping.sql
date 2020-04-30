@@ -14,7 +14,23 @@ create table users(
    constraint id_PK primary key(id)
 )engine=InnoDB;
 
-Insert Into users Values(null, 0, "Fabus", "Eggus", 0, "2002-01-25", "egutsch", sha2("fabian", 512));
+Insert Into users Values(null, 1, "Alex", "Fagschlunger", 0, "2001-12-01", "Lexxu", sha2("ALla12!§", 512));
 
 select * from users;
 
+
+create table reservierung(
+   id int not null auto_increment,
+   firstname varchar(100) not null,
+   lastname varchar(100) not null,
+   bearbeitet bool not null,
+   ankunftsdatum date not null,
+   abreisedatum date not null,
+   personen int not null,
+   
+   constraint id_PK primary key(id)
+)engine=InnoDB;
+
+Insert Into reservierung Values(null, "Fabus", "Eggus", false, "2020-04-08", "2021-01-25", "1");
+
+select * from reservierung;

@@ -43,7 +43,7 @@ namespace Fagschlunger_Camping.Models.db
             // @firstname, @lastname, ... Paramter => verhindern SQL-Injections
             // müssen immer verwendet werden wenn es sich um Daten des Benutzers handelt
             // @ firstname ... firstname kann beliebig benannt werden
-            cmdInsert.CommandText = "Insert Into reservierung Values(null, @firstname, @lastname, @ankunftsdatum, @abreisedatum, @personen)";
+            cmdInsert.CommandText = "Insert Into reservierung Values(null, @firstname, @lastname, @bearbeitet, @ankunftsdatum, @abreisedatum, @personen)";
 
             // Parameter erzeugt
             DbParameter paramFN = cmdInsert.CreateParameter();
@@ -55,6 +55,11 @@ namespace Fagschlunger_Camping.Models.db
             paramLN.ParameterName = "lastname";
             paramLN.Value = user.Lastname;
             paramLN.DbType = DbType.String;
+
+            DbParameter parambe = cmdInsert.CreateParameter();
+            parambe.ParameterName = "bearbeitet";
+            parambe.Value = user.Bearbeitet;
+            parambe.DbType = DbType.Boolean;
 
             DbParameter paramAnkunft = cmdInsert.CreateParameter();
             paramAnkunft.ParameterName = "ankunftsdatum";
@@ -74,6 +79,7 @@ namespace Fagschlunger_Camping.Models.db
             // Parameteer mit dem Comamnd verbinden
             cmdInsert.Parameters.Add(paramFN);
             cmdInsert.Parameters.Add(paramLN);
+            cmdInsert.Parameters.Add(parambe);
             cmdInsert.Parameters.Add(paramAnkunft);
             cmdInsert.Parameters.Add(paramAbreise);
             cmdInsert.Parameters.Add(paramPerson);
@@ -82,11 +88,42 @@ namespace Fagschlunger_Camping.Models.db
             // ExecuteNonQuery() ... wird bein INSERT, UPDATE, und DELETE verwendet diese Methode liefert die ANzahl der betroffenen Datensätze zurück
             return cmdInsert.ExecuteNonQuery() == 1;
         }
+        public List<Reservierung> GetReservierungs()
+        {
+            List<Reservierung>  reservierungs = new List<Reservierung>();
+
+
+            DbCommand cmdSelect = this._connection.CreateCommand();
+            cmdSelect.CommandText = "SELECT * FROM users";
+
+            // ExecuteReader() wird immer bei SELECT- Abfragen benötigt mit ihm kann man sich zeileinweise durch das erhaltene Ergebnis bewegen
+            using (DbDataReader reader = cmdSelect.ExecuteReader())
+            {
+                // mit Read() wird der nächste Datensatz (User) gelesen
+                while (reader.Read())
+                {
+                    reservierungs.Add(new Reservierung
+                    {
+                        // Id ... so lautet das feld in der Klasse User
+                        // "id" ... so lautet der Spaltenname in der Datenbanktabelle users
+
+                        ID = Convert.ToInt32(reader["id"]),
+                        Firstname = Convert.ToString(reader["firstname"]),
+                        Lastname = Convert.ToString(reader["lastname"]),
+                        Bearbeitet = Convert.ToBoolean(reader["bearbeitet"]),
+                        Ankunftsdatum = Convert.ToDateTime(reader["ankunftsdatum"]),
+                        Abreisedatum = Convert.ToDateTime(reader["abreisedatum"]),
+                        Personen = Convert.ToInt32(reader["personen"]),
+                    });
+                }
+            }
+            return reservierungs;
+        }
 
         public bool UpdateUserData(int id, Reservierung newUserData)
         {
             DbCommand cmdUpdate = this._connection.CreateCommand();
-            cmdUpdate.CommandText = "UPDATE users SET firstname=@firstname, lastname =@lastname, + " +
+            cmdUpdate.CommandText = "UPDATE users SET firstname=@firstname, lastname=@lastname, bearbeitet=@bearbeitet + " +
                 "ankunftsdatum=@ankunftsdatum, abreisedatum=@abreisedatum, personen=@personen" +
                 "WHERE id=@uId";
 
@@ -100,6 +137,10 @@ namespace Fagschlunger_Camping.Models.db
             paramLastname.Value = newUserData.Lastname;
             paramLastname.DbType = DbType.String;
 
+            DbParameter parambe = cmdUpdate.CreateParameter();
+            parambe.ParameterName = "bearbeitet";
+            parambe.Value = newUserData.Bearbeitet;
+            parambe.DbType = DbType.Boolean;
 
             DbParameter paramAnkunft = cmdUpdate.CreateParameter();
             paramAnkunft.ParameterName = "ankunftsdatum";
@@ -119,6 +160,7 @@ namespace Fagschlunger_Camping.Models.db
 
             cmdUpdate.Parameters.Add(paramFirstname);
             cmdUpdate.Parameters.Add(paramLastname);
+            cmdUpdate.Parameters.Add(parambe);
             cmdUpdate.Parameters.Add(paramAnkunft);
             cmdUpdate.Parameters.Add(paramAbreise);
             cmdUpdate.Parameters.Add(paramPerson);

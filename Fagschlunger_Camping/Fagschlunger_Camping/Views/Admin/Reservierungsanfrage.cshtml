@@ -1,5 +1,6 @@
-﻿@model Fagschlunger_Camping.Models.Reservierung
+﻿@model List<Fagschlunger_Camping.Models.Reservierung>
 
+@using Fagschlunger_Camping.Models
 
 @{
     ViewBag.Title = "Reservierungsanfrage";
@@ -7,62 +8,60 @@
 
 <h2>Reservierungsanfrage</h2>
 
-@using (Html.BeginForm())
+<form></form>
+
+
+@if ((Model != null) && (Model.Count > 0))
 {
-    <p>
-        @Html.ValidationSummary()
-    </p>
+
     <table>
         <thead>
             <tr>
-                <td colspan="2">Reservierungsanfrage</td>
+                <td colspan="6">Registrierte Anfragen</td>
+                <td>ID</td>
+                <td>Vorname</td>
+                <td>Nachname</td>
+                <td>Ankunftsdatum</td>
+                <td>Abreisedatum</td>
+                <td>Personen</td>
+                <td>löschen</td>
+                <td>update</td>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>@Html.LabelFor(u => u.Firstname, "Vorname:* ")</td>
-                <td>@Html.TextBoxFor(u => u.Firstname, new { required = "required" })</td>
-            </tr>
+            @foreach (Reservierung r in Model)
+            {
+                <tr>
+                    <td>@r.ID</td>
+                    <td>@r.Firstname</td>
+                    <td>@r.Lastname</td>
+                    <td>@r.Ankunftsdatum</td>
+                    <td>@r.Abreisedatum</td>
+                    <td>@r.Personen</td>
+                    <td>
 
-            <tr>
-                <td>@Html.LabelFor(u => u.Lastname, "Nachname:* ")</td>
-                <td>
-                    @Html.TextBoxFor(u => u.Lastname, new { required = "required" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(u => u.Bearbeitet, "Bearbeitet: ")</td>
-                <td>@Html.RadioButtonFor(u => u.Bearbeitet, true)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(u => u.Ankunftsdatum, "Ankunftsdatum: ")</td>
-                <td>@Html.TextBoxFor(u => u.Ankunftsdatum, new { type = "date" })</td>
-            </tr>
+                        @*Formular für den Löschen Button erzeugen*@
+                        @*method = post ... Formulardaten werden nicht in der Addressleiste übertragen
+                            action ... wohin soll das Formular gesendet werden (AdminController und dort an die delete-Methode)
+                            es wird ein Parameter mit dem Namen id übermittelt*@
 
-            <tr>
-                <td>@Html.LabelFor(u => u.Abreisedatum, "Abreisedatum: ")</td>
-                <td>@Html.TextBoxFor(u => u.Abreisedatum, new { type = "date" })</td>
-            </tr>
+                        <form method="post" action="/admin/update/@r.ID">
+                            <input type="submit" value="Updaten" />
+                        </form>
 
-            <tr>
-                <td>@Html.LabelFor(u => u.Personen, "Anzahl von Personen:* ")</td>
-                <td>@Html.TextBoxFor(u => u.Personen, new { required = "required" })</td>
-            </tr>
-
-            <tr>
-                <td colspan="2" style="text-align:center">
-                    <input type="submit" value="absenden" id="btnSubmit" />
-                    <input type="reset" value="abbrechen" id="btnReset" />
-                </td>
-            </tr>
+                    </td>
+                    <td>update</td>
+                </tr>
+            }
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="2">* sind Pflichtfelder</td>
+                <td colspan="8"></td>
             </tr>
         </tfoot>
 
 
     </table>
+
 
 }

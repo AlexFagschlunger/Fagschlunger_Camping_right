@@ -1,5 +1,5 @@
 create database if not exists db_einfuehrung collate utf8_general_ci;
-use db_einfuehrung;
+use db_einführung;
 
 create table reservierung(
    id int not null auto_increment,
