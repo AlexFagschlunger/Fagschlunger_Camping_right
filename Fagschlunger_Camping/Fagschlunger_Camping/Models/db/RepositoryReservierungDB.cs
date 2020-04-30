@@ -107,7 +107,7 @@ namespace Fagschlunger_Camping.Models.db
                     string lastname = Convert.ToString(reader["lastname"]);
                     bool bearbeitet = Convert.ToBoolean(reader["bearbeitet"]);
                     DateTime ankunftsdatum = Convert.ToDateTime(reader["ankunftsdatum"]);
-                    DateTime abreisedatu = Convert.ToDateTime(reader["abreisedatum"]);
+                    DateTime abreisedatum = Convert.ToDateTime(reader["abreisedatum"]);
                     int personen = Convert.ToInt32(reader["personen"]);
                     reservierungs.Add(new Reservierung
                     {
