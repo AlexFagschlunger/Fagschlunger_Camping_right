@@ -15,7 +15,7 @@ namespace Fagschlunger_Camping.Models
         public DateTime Abreisedatum { get; set; }
         public int Personen { get; set; }
 
-        public Reservierung() : this(0, "", "", true, DateTime.MinValue, DateTime.MinValue, 0) { }
+        public Reservierung() : this(0, "", "", false, DateTime.MinValue, DateTime.MinValue, 0) { }
 
         public Reservierung(int id, string firstname, string lastname, bool bearbeitet, DateTime ankunftsdatum, DateTime abreisedatum, int personen)
         {

@@ -12,7 +12,6 @@ namespace Fagschlunger_Camping.Controllers
     public class AdminController : Controller
     {
         IRepositoryReservierung rep;
-        private Reservierung newUserData;
 
         // GET: Admin
         public ActionResult Index()
@@ -31,23 +30,38 @@ namespace Fagschlunger_Camping.Controllers
 
             return View(res);
         }
-
         // Parametername id muss mit dem angegebenen Namen beim Aufruf Users.cshtml bei DELETE-Button übereinstimmen
-        public ActionResult Update(int id)
+        public ActionResult Update(int bearbeitet)
         {
             rep = new RepositoryReservierungDB();
             rep.Open();
 
-            if (rep.UpdateUserData(id, newUserData))
+            if (rep.Update(bearbeitet))
             {
-                rep.Delete(id);
                 rep.Close();
-                return View("Message", new Message("User löschen", "Benutzer wurde erfolgreich geupdatet!"));
+                return View("Message", new Message("Reservierung updaten", "Benutzer wurde erfolgreich geupdatet!"));
             }
             else
             {
                 rep.Close();
-                return View("Message", new Message("User löschen", "Benutzer konnte nicht geupdatet werden!"));
+                return View("Message", new Message("Reservierung updaten", "Benutzer konnte nicht geupdatet werden!"));
+            }
+
+        }
+        public ActionResult Delete(int id)
+        {
+            rep = new RepositoryReservierungDB();
+            rep.Open();
+
+            if (rep.Delete(id))
+            {
+                rep.Close();
+                return View("Message", new Message("Reservierung löschen", "Reservierung wurde erfolgreich gelöscht!"));
+            }
+            else
+            {
+                rep.Close();
+                return View("Message", new Message("Reservierung löschen", "Reservierung konnte nicht gelöscht werden!"));
             }
 
         }

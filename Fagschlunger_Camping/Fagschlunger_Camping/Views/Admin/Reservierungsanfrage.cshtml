@@ -6,7 +6,8 @@
     ViewBag.Title = "Reservierungsanfrage";
 }
 
-<h2>Reservierungsanfrage</h2>
+<h2 class="text1">Reservierungsanfrage</h2>
+<br />
 
 <form></form>
 
@@ -14,69 +15,37 @@
 @if ((Model != null) && (Model.Count > 0))
 {
 
+    <p class="text5">Registrierte Anfragen:</p>
     <table>
-        <thead>
+        <thead class="thead">
             <tr>
-                <td colspan="6">Registrierte Anfragen</td>
-                <td>ID</td>
-                <td>Vorname</td>
-                <td>Nachname</td>
-                <td>Ankunftsdatum</td>
-                <td>Abreisedatum</td>
-                <td>Personen</td>
-                <td>löschen</td>
-                <td>update</td>
+                <td width="100">ID</td>
+                <td width="200">Vorname</td>
+                <td width="200">Nachname</td>
+                <td width="200">Ankunftsdatum</td>
+                <td width="200">Abreisedatum</td>
+                <td width="100">Personen</td>
             </tr>
         </thead>
         <tbody>
             @foreach (Reservierung r in Model)
             {
-            <tr>
-                <td>@r.ID</td>
-                <td>
-                    <form method="post" action="/admin/update/@r.ID">
-                        <input type="submit" value="Updaten" />
-                    </form>
-                </td>
-                <td>@r.Firstname</td>
-                <td>
-                    <form method="post" action="/admin/update/@r.ID">
-                        <input type="submit" value="Updaten" />
-                    </form>
-                </td>
-                <td>@r.Lastname</td>
-                <td>
-                    <form method="post" action="/admin/update/@r.ID">
-                        <input type="submit" value="Updaten" />
-                    </form>
-                </td>
-                <td>@r.Ankunftsdatum</td>
-                <td>
-                    <form method="post" action="/admin/update/@r.ID">
-                        <input type="submit" value="Updaten" />
-                    </form>
-                </td>
-                <td>@r.Abreisedatum</td>
-                <td>
-                    <form method="post" action="/admin/update/@r.ID">
-                        <input type="submit" value="Updaten" />
-                    </form>
-                </td>
-                <td>@r.Personen</td>
-                <td>
-                    <form method="post" action="/admin/update/@r.ID">
-                        <input type="submit" value="Updaten" />
-                    </form>
-                </td>
-                <td>
-
-                    @*Formular für den Löschen Button erzeugen*@
-                    @*method = post ... Formulardaten werden nicht in der Addressleiste übertragen
-            action ... wohin soll das Formular gesendet werden (AdminController und dort an die delete-Methode)
-            es wird ein Parameter mit dem Namen id übermittelt*@
-
-                </td>
-            </tr>
+                <tr>
+                    <td>@r.ID</td>
+                    <td>@r.Firstname</td>
+                    <td>@r.Lastname</td>
+                    <td>@r.Ankunftsdatum</td>
+                    <td>@r.Abreisedatum</td>
+                    <td>@r.Personen</td>
+                    <td>
+                        <form method="post" action="/admin/update/@r.ID">
+                            <input type="submit" value="Updaten" />
+                        </form>
+                        <form method="post" action="/admin/delete/@r.ID">
+                            <input type="submit" value="Löschen" />
+                        </form>
+                    </td>
+                </tr>
             }
         </tbody>
         <tfoot>

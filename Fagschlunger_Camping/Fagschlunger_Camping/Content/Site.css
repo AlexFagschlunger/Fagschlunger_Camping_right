@@ -202,3 +202,14 @@ input[name="r"] {
 #r5:checked ~ .s1 {
     margin-left: -80%;
 }
+
+.text5 {
+    font-size: 1.2em;
+    font-family: Comic sans MS;
+    font-weight: bold;
+}
+
+.thead {
+    border: 1px solid black;
+    font-weight: bold;
+}
