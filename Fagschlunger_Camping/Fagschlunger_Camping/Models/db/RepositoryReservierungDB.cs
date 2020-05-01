@@ -124,21 +124,24 @@ namespace Fagschlunger_Camping.Models.db
             }
             return reservierungs;
         }
-        public bool Update(int bearbeitet)
+        public bool Update(int id, bool newStatus)
         {
             DbCommand cmdUpdate = this._connection.CreateCommand();
-            cmdUpdate.CommandText = "UPDATE reservierung SET bearbeitet=@bearbeitet";
+            cmdUpdate.CommandText = "UPDATE reservierung SET bearbeitet=@newStatus WHERE id=@ID";
 
-            //Parameter belegen
-            DbParameter parambe = cmdUpdate.CreateParameter();
-            parambe.ParameterName = "bearbeitet";
-            parambe.Value = bearbeitet;
-            parambe.DbType = DbType.Int32;
+            DbParameter paramId = cmdUpdate.CreateParameter();
+            paramId.ParameterName = "ID";
+            paramId.Value = id;
+            paramId.DbType = DbType.Int32;
 
-            // Parameter dem Command hinzufügen
-            cmdUpdate.Parameters.Add(parambe);
+            DbParameter paramStatus = cmdUpdate.CreateParameter();
+            paramStatus.ParameterName = "newStatus";
+            paramStatus.Value = newStatus;
+            paramStatus.DbType = DbType.Boolean;
 
-            // Command ausführen
+            cmdUpdate.Parameters.Add(paramId);
+            cmdUpdate.Parameters.Add(paramStatus);
+
             return cmdUpdate.ExecuteNonQuery() == 1;
 
         }

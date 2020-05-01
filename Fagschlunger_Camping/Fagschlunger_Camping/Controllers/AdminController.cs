@@ -31,21 +31,20 @@ namespace Fagschlunger_Camping.Controllers
             return View(res);
         }
         // Parametername id muss mit dem angegebenen Namen beim Aufruf Users.cshtml bei DELETE-Button übereinstimmen
-        public ActionResult Update(int bearbeitet)
+        public ActionResult Update(int idreservation)
         {
-            rep = new RepositoryReservierungDB();
-            rep.Open();
 
-            if (rep.Update(bearbeitet))
+            if (Session["loggedinUser"] == null)
             {
-                rep.Close();
-                return View("Message", new Message("Reservierung updaten", "Benutzer wurde erfolgreich geupdatet!"));
+                return RedirectToAction("login", "admin");
             }
-            else
-            {
-                rep.Close();
-                return View("Message", new Message("Reservierung updaten", "Benutzer konnte nicht geupdatet werden!"));
-            }
+
+            rep = new RepositoryReservierungDB();
+
+            rep.Open();
+            rep.Update(idreservation, true);
+            rep.Close();
+            return View();
 
         }
         public ActionResult Delete(int id)

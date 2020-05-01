@@ -14,7 +14,7 @@ namespace Fagschlunger_Camping.Models.db
 
         List<Reservierung> GetReservierungs();
 
-        bool Update(int bearbeitet);
+        bool Update(int id, bool newStatus);
         bool UpdateUserData(int id, Reservierung newUserData);
     }
 }
