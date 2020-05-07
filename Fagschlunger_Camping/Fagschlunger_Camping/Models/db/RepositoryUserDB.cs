@@ -62,47 +62,81 @@ namespace Fagschlunger_Camping.Models.db
             }
             return users;
         }
-
-        public User GetUser(int id)
+        /*
+        public List<User> GetAllUser2()
         {
-            DbCommand cmdGetUser = this._connection.CreateCommand();
-            cmdGetUser.CommandText = "SELECT * FROM users WHERE id=@uid";
+            //leere Liste erzeugen
+            List<User> allUsers = new List<User>();
 
-            DbParameter paramId = cmdGetUser.CreateParameter();
-            paramId.ParameterName = "uid";
-            paramId.Value = id;
-            paramId.DbType = DbType.Int32;
+            //leeres Command erzeugen
+            DbCommand allUsersCmd = this._connection.CreateCommand();
+            allUsersCmd.CommandText = "Select * from users";
 
-            cmdGetUser.Parameters.Add(paramId);
-
-            // bei SELECT-Abfragen müssen wir immer ExecuteReader() aufrufen
-            using (DbDataReader reader = cmdGetUser.ExecuteReader())
+            //Ressource anfordern -einem Db-reader
+            // dieser muss unbedingt wieder freigegeben werden
+            using (DbDataReader reader = allUsersCmd.ExecuteReader())
             {
-                // keine Zeile (Datensatz) vorhanden
+                //keine Zeile in der Db-Tabelle
                 if (!reader.HasRows)
                 {
-                    // null wird zurückgeliefert
+                    // Methode beenden und null zurückgeben
                     return null;
                 }
-
-                // dieser Aufruf ist notwendig, da damit der erste DAtensatz gelesen wird
-                // Cursor zeigt zu Beginn "vor" alle Datensätze
-                reader.Read();
-                return new User
+                // den Cursor mit Hilfe von Read um einen Eintrag weiter sezten
+                // Read gibt true zurück, falls no Datensätze (User) vorhanden sind ansonsten false
+                while (reader.Read())
                 {
-                    // ID ... so lautet das feld in der Klasse User
-                    // "id" ... so lautet der Spaltenname in der Datenbanktabelle users
+                    // den User unserer Liste hinzufügen
+                    allUsers.Add(new User
+                    {
+                        ID = Convert.ToInt32(reader["id"]),
+                        Rolle = (Benutzer)Convert.ToInt32(reader["rolle"]),
+                        Firstname = Convert.ToString(reader["firstname"]),
+                        Lastname = Convert.ToString(reader["lastname"]),
+                        Gender = (Gender)Convert.ToInt32(reader["gender"]),
+                        Birthdate = Convert.ToDateTime(reader["birthdate"]),
+                        Username = Convert.ToString(reader["username"]),
+                        Password = ""
+                    }
+                        );
+                }
 
-                    ID = Convert.ToInt32(reader["id"]),
-                    Rolle = (Benutzer)Convert.ToInt32(reader["rolle"]),
-                    Firstname = Convert.ToString(reader["firstname"]),
-                    Lastname = Convert.ToString(reader["lastname"]),
-                    Gender = (Gender)Convert.ToInt32(reader["gender"]),
-                    Birthdate = Convert.ToDateTime(reader["birthdate"]),
-                    Username = Convert.ToString(reader["username"]),
-                    Password = ""
-                };
+                // bei dieser Klammer wird die DbDataReader-Ressource wirder freigegeben
             }
+            // alle gefundenen User zurückliefern
+            return allUsers;
+        }
+        */
+        public List<User> GetRegisteredUser()
+        {
+            List<User> user = new List<User>();
+
+            DbCommand cmdSelect = this._connection.CreateCommand();
+            cmdSelect.CommandText = "SELECT * FROM users Where rolle = 2";
+
+            // ExecuteReader() wird immer bei SELECT- Abfragen benötigt mit ihm kann man sich zeileinweise durch das erhaltene Ergebnis bewegen
+            using (DbDataReader reader = cmdSelect.ExecuteReader())
+            {
+                // mit Read() wird der nächste Datensatz (User) gelesen
+                while (reader.Read())
+                {
+                    user.Add(new User
+                    {
+                        // Id ... so lautet das feld in der Klasse User
+                        // "id" ... so lautet der Spaltenname in der Datenbanktabelle users
+
+                        ID = Convert.ToInt32(reader["id"]),
+                        Rolle = (Benutzer)Convert.ToInt32(reader["rolle"]),
+                        Firstname = Convert.ToString(reader["firstname"]),
+                        Lastname = Convert.ToString(reader["lastname"]),
+                        Gender = (Gender)Convert.ToInt32(reader["gender"]),
+                        Birthdate = Convert.ToDateTime(reader["birthdate"]),
+                        Username = Convert.ToString(reader["username"]),
+                        Password = ""
+                    });
+                }
+            }
+            return user;
         }
 
         public bool Insert(User user)

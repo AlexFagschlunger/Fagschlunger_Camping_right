@@ -12,7 +12,7 @@ namespace Fagschlunger_Camping.Models.db
         bool Delete(int id);
         bool UpdateUserData(int id, User newUserData);
         List<User> GetAllUser();
-        User GetUser(int id);
+        List<User> GetRegisteredUser();
 
 
         User Login(UserLogin user);

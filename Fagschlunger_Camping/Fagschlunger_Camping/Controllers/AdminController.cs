@@ -12,6 +12,7 @@ namespace Fagschlunger_Camping.Controllers
     public class AdminController : Controller
     {
         IRepositoryReservierung rep;
+        IRepositoryUser rep1;
 
         // GET: Admin
         public ActionResult Index()
@@ -66,7 +67,35 @@ namespace Fagschlunger_Camping.Controllers
         }
         public ActionResult RegistrieteBenutzer()
         {
-            return View();
+            List<User> users;
+            // DB-Instanz erzeugen
+            rep1 = new RepositoryUserDB();
+            // DB-Verbindung öffnen
+            rep1.Open();
+            // alle Benutzer aus der DB-Tabelle ermitteln
+            users = rep1.GetRegisteredUser();
+            // DB-Verbindung trennen
+            rep1.Close();
+
+            // Jetzt wird an die View eine Liste mit den Benutzern aus der DB übergeben
+            return View(users);
+        }
+
+        public ActionResult DeleteUser(int id)
+        {
+            rep1 = new RepositoryUserDB();
+            rep1.Open();
+
+            if (rep1.Delete(id))
+            {
+                rep1.Close();
+                return RedirectToAction("RegistrieteBenutzer");
+            }
+            else
+            {
+                rep1.Close();
+                return View("Message", new Message("User löschen", "User konnte nicht gelöscht werden!"));
+            }
         }
     }
 }

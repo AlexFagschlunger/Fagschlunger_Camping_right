@@ -1,5 +1,52 @@
-﻿@{
-    ViewBag.Title = "RegistrieteBenutzer";
-}
+﻿@model List<Fagschlunger_Camping.Models.User>
+@using Fagschlunger_Camping.Models
 
 <h2>RegistrieteBenutzer</h2>
+
+
+@if((Model != null) && (Model.Count > 0))
+{
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Rolle</td>
+                <td>Vorname</td>
+                <td>Nachname</td>
+                <td>Geschlechte</td>
+                <td>Geburtsdatum</td>
+                <td>Username</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (User u in Model)
+            {
+                <tr>
+                    <td>@u.ID</td>
+                    <td>@u.Rolle</td>
+                    <td>@u.Firstname</td>
+                    <td>@u.Lastname</td>
+                    <td>@u.Gender</td>
+                    <td>@u.Birthdate</td>
+                    <td>@u.Username</td>
+                    <td>
+                        <form method="get" action="/admin/deleteuser/@u.ID">
+                            <input type="submit" value="Löschen" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">registrierte Benutzer</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+}
+else
+{
+    <p>Keine registrierte Benutzer vorhanden.</p>
+}

@@ -31,6 +31,6 @@ create table reservierung(
    constraint id_PK primary key(id)
 )engine=InnoDB;
 
-Insert Into reservierung Values(null, "Fabus", "Eggus", false, "2020-04-08", "2021-01-25", "1");
+Insert Into reservierung Values(null, "Fabus", "Eggus", true, "2020-04-08", "2021-01-25", "1");
 
 select * from reservierung order by ankunftsdatum ASC;
