@@ -1,0 +1,56 @@
+﻿@model Fagschlunger_Camping.Models.User
+
+
+@{
+    ViewBag.Title = "MyData";
+}
+
+<h2>Meine persönlichen Daten</h2>
+
+@if (Model != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <td colspan="2">Meine Daten:</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Vorname: </td>
+                <td>@Model.Firstname</td>
+            </tr>
+
+            <tr>
+                <td>Nachname: </td>
+                <td>@Model.Lastname</td>
+            </tr>
+            <tr>
+                <td>Username: </td>
+                <td>@Model.Username</td>
+            </tr>
+
+            <tr>
+                <td>Geburtsdatum: </td>
+                <td>@Model.Birthdate</td>
+            </tr>
+
+            <tr>
+                <td>Geschlecht: </td>
+                <td>@Model.Gender</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" style="text-align:right; font-size: 80%">Meine persöhnlichen Daten</td>
+            </tr>
+        </tfoot>
+
+
+    </table>
+
+}
+else
+{
+    <p>Keine Benutzerdaten vorhanden</p>
+}

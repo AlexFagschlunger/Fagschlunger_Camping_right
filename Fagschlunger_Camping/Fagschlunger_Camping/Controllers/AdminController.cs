@@ -21,15 +21,29 @@ namespace Fagschlunger_Camping.Controllers
         }
         public ActionResult Reservierungsanfrage()
         {
-            List<Reservierung> res;
+            if((Session["loggedinUser"] != null) && (((User)Session["loggedinUser"]).Rolle == Benutzer.Admin))
+            {
+                List<Reservierung> res;
 
-            rep = new RepositoryReservierungDB();
-            rep.Open();
+                rep = new RepositoryReservierungDB();
+                rep.Open();
 
-            res = rep.GetReservierungs();
-            rep.Close();
+                res = rep.GetReservierungs();
+                rep.Close();
 
-            return View(res);
+                List<Reservierung> neuesRes = new List<Reservierung>();
+
+                foreach(var r in res)
+                {
+                    if (!r.Bearbeitet)
+                    {
+                        neuesRes.Add(r);
+                    }
+                } 
+                return View(neuesRes);
+            }
+            return RedirectToAction("index", "home");
+           
         }
         // Parametername id muss mit dem angegebenen Namen beim Aufruf Users.cshtml bei DELETE-Button übereinstimmen
         public ActionResult Update(int idreservation)
@@ -67,18 +81,24 @@ namespace Fagschlunger_Camping.Controllers
         }
         public ActionResult RegistrieteBenutzer()
         {
-            List<User> users;
-            // DB-Instanz erzeugen
-            rep1 = new RepositoryUserDB();
-            // DB-Verbindung öffnen
-            rep1.Open();
-            // alle Benutzer aus der DB-Tabelle ermitteln
-            users = rep1.GetRegisteredUser();
-            // DB-Verbindung trennen
-            rep1.Close();
+            if((Session["loggedinUser"] != null) && (((User)Session["loggedinUser"]).Rolle == Benutzer.Admin))
+            {
+                List<User> users;
+                // DB-Instanz erzeugen
+                rep1 = new RepositoryUserDB();
+                // DB-Verbindung öffnen
+                rep1.Open();
+                // alle Benutzer aus der DB-Tabelle ermitteln
+                users = rep1.GetRegisteredUser();
+                // DB-Verbindung trennen
+                rep1.Close();
 
-            // Jetzt wird an die View eine Liste mit den Benutzern aus der DB übergeben
-            return View(users);
+                // Jetzt wird an die View eine Liste mit den Benutzern aus der DB übergeben
+                return View(users);
+            }
+
+            return RedirectToAction("index", "home");
+            
         }
 
         public ActionResult DeleteUser(int id)

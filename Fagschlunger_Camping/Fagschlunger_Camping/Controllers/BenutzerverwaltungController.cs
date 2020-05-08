@@ -104,7 +104,25 @@ namespace Fagschlunger_Camping.Controllers
             
         }
 
+        public ActionResult Logout()
+        {
+            //Session löschen
+            Session["loggedinUser"] = null;
 
+            return RedirectToAction("index", "home");
+        }
+
+        public ActionResult MyData()
+        {
+            if(Session["loggedinUser"] != null)
+            {
+                User u = (User)Session["loggedinUser"];
+                // da wir nur Daten aus der Klasse User erzeugen können wir an die View den User u übergeben
+                // sind in der DB weiter Daten zum User vorhanden müssten wir diese von der DB laden und an die View geben
+                return View(u);
+            }
+            return RedirectToAction("index", "home");
+        }
 
         private void CheckUserData(User user)
         {

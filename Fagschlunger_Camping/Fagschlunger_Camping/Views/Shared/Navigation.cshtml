@@ -21,6 +21,15 @@
             <li class="nav_level2">@Html.ActionLink("Registrierte Benutzer", "registrietebenutzer", "admin")</li>
         }
     }
+    @if(Session["loggedinUser"] != null)
+    {
+        Fagschlunger_Camping.Models.User u = (Fagschlunger_Camping.Models.User)Session["loggedinUser"];
+
+        <span>@u.Firstname</span>
+        <span class="nav_level2">@Html.ActionLink("Logout", "logout", "benutzerverwaltung")</span>
+
+        <li class="nav_level2">@Html.ActionLink("Meine Daten", "mydata", "benutzerverwaltung")</li>
+    }
 
 
 </ul>
